@@ -5,17 +5,35 @@
 // 3. Se l'input è vuoto, mostra un messaggio di errore e non aggiungere nulla.
 // 4. (Bonus) Al click sul testo dell'elemento, barralo come "fatto".
 
-const btn  = document.getElementById("btn-aggiungi");
-const prodotto = document.getElementById("item");
 
-function aggiungi(){
+const itemInput = document.getElementById("item");
+const btn = document.getElementById("btn-aggiungi");
+const lista = document.getElementById("lista");
+const err = document.getElementById("errore");
 
-    // creo un nuovo <li>
+function aggiungiElementi() {
+    err.textContent = "";
+    if (itemInput.value === "") {
+        err.textContent = "Inserire valore adeguato";
+        return;
+    }
+
     const nuovoItem = document.createElement("li");
+    nuovoItem.textContent = itemInput.value;
 
-    
+    nuovoItem.addEventListener("click", () => {
+        nuovoItem.classList.toggle("done");
+    });
 
+    const btnRimuovi = document.createElement("button");
+    btnRimuovi.textContent = "X";
+    nuovoItem.append(btnRimuovi);
+    btnRimuovi.addEventListener("click", () => {
+        nuovoItem.remove();
+    });
+
+    lista.append(nuovoItem);
+    itemInput.value = "";
 }
 
-
-btn.addEventListener("click",aggiungi);
+btn.addEventListener("click", aggiungiElementi);
